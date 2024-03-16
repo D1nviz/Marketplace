@@ -1,12 +1,14 @@
 "use client";
 
 import { FC } from "react";
-import { Button } from "@/components/ui/button";
-import { productCategories } from "@/config";
-import { ChevronDown } from "lucide-react";
-import { cn } from "@/lib/utils";
 import Image from "next/image";
 import Link from "next/link";
+import { ChevronDown } from "lucide-react";
+
+import { Button } from "@/components/ui/button";
+
+import { productCategories } from "@/config";
+import { cn } from "@/lib/utils";
 
 type CategoryT = (typeof productCategories)[number];
 
