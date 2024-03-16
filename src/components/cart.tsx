@@ -1,5 +1,9 @@
 "use client";
 
+import Image from "next/image";
+import Link from "next/link";
+import { ShoppingCart } from "lucide-react";
+
 import {
   Sheet,
   SheetContent,
@@ -8,12 +12,10 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
-import { ShoppingCart } from "lucide-react";
+import { buttonVariants } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
+
 import { formatPrice } from "@/lib/utils";
-import Link from "next/link";
-import { buttonVariants } from "./ui/button";
-import Image from "next/image";
 
 const Cart = () => {
   const itemCount = 0;
