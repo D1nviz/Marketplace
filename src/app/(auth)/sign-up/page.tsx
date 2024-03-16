@@ -1,4 +1,5 @@
 "use client";
+
 import Link from "next/link";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -14,6 +15,7 @@ import {
   type TAuthCredentialsValiador,
 } from "@/lib/validators/account-credentials";
 import { cn } from "@/lib/utils";
+import { trpc } from "@/trpc/client";
 
 const SignUpPage = () => {
   const {
@@ -24,8 +26,9 @@ const SignUpPage = () => {
     resolver: zodResolver(AuthCredentialsValiador),
   });
 
+  const { mutate, isLoading } = trpc.auth.createPayloadUser.useMutation({});
   const onSubmit = ({ email, password }: TAuthCredentialsValiador) => {
-    console.log(email, password, "submitting...");
+    mutate({ email, password });
   };
 
   return (
@@ -60,6 +63,7 @@ const SignUpPage = () => {
                 <Label htmlFor="password">Password</Label>
                 <Input
                   {...register("password")}
+                  type="password"
                   className={cn({
                     "focus-visible:ring-red-500": errors.password,
                   })}
