@@ -4,6 +4,7 @@ import MaxWidthWrapper from "@/components/max-width-wrapper";
 import { Button, buttonVariants } from "@/components/ui/button";
 
 import { perks } from "@/config";
+import ProductReel from "@/components/products-reel";
 
 export default function Home() {
   return (
@@ -26,6 +27,7 @@ export default function Home() {
           </div>
         </div>
         {/* TODO: List products */}
+        <ProductReel query={{sort: "desc", limit: 4} } title="Brand new" href="#" />
       </MaxWidthWrapper>
       <section className="border-t border-gray-200 bg-gray-50 ">
         <MaxWidthWrapper className="py-20">
