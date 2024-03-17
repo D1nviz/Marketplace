@@ -1,13 +1,17 @@
 import Link from "next/link";
+import { cookies } from "next/headers";
 
 import MaxWidthWrapper from "@/components/max-width-wrapper";
 import NavItems from "@/components/nav-items";
 import Cart from "@/components/cart";
 import { buttonVariants } from "@/components/ui/button";
 import { Icons } from "@/components/icons";
+import { getSerVerSideUser } from "@/lib/get-server-side-user";
+import UserAccountNav from "./user-account-nav";
 
-const Navbar = () => {
-  const user = null;
+const Navbar = async () => {
+  const nextCookies = cookies();
+  const { user } = await getSerVerSideUser(nextCookies);
 
   return (
     <div className="bg-white sticky z-50 top-0 inset-x-0 h-16">
@@ -36,7 +40,9 @@ const Navbar = () => {
                     <span className="h-6 w-px bg-gray-200" aria-hidden="true" />
                   )}
 
-                  {user ? null : (
+                  {user ? (
+                    <UserAccountNav user={user}/>
+                  ) : (
                     <Link
                       href="/sign-up"
                       className={buttonVariants({
