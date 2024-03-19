@@ -1,13 +1,15 @@
+"use client";
+
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import SwiperType from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination } from "swiper/modules";
+import { ChevronLeft, ChevronRight } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 import "swiper/css";
 import "swiper/css/pagination";
-import { cn } from "@/lib/utils";
-import { ChevronLeft, ChevronRight } from "lucide-react";
 
 type ImageSliderProps = {
   urls: string[];
