@@ -29,7 +29,9 @@ export type ExpressContext = inferAsyncReturnType<typeof createContext>;
 export type WebhookRequest = IncomingMessage & { rawBody: Buffer };
 const start = async () => {
   const webhookMiddleware = bodyParser.json({
-    verify: (req: WebhookRequest, _, buffer) => (req.rawBody = buffer),
+    verify: (req: WebhookRequest, _, buffer) => {
+      req.rawBody = buffer;
+    },
   });
 
   app.post("/api/webhooks/stripe", webhookMiddleware, stripeWebhookHandler);
@@ -38,7 +40,7 @@ const start = async () => {
     initOptions: {
       express: app,
       onInit: async (cms) => {
-        cms.logger.info("Admin URL: " + cms.getAdminURL());
+        cms.logger.info(`Admin URL: ${cms.getAdminURL()}`);
       },
     },
   });
@@ -54,8 +56,6 @@ const start = async () => {
     const parsedUrl = parse(req.url, true);
 
     return nextApp.render(req, res, "/cart", parsedUrl.query);
-
-  
   });
 
   app.use("/cart", cartRouter);

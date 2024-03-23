@@ -76,11 +76,7 @@ export const paymentRouter = router({
       }
     }),
   pollOrderStatus: privateProcedure
-    .input(
-      z.object({
-        orderId: z.string(),
-      })
-    )
+    .input(z.object({ orderId: z.string() }))
     .query(async ({ input }) => {
       const { orderId } = input;
 
