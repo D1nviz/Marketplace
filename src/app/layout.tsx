@@ -1,20 +1,18 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+import { Toaster } from "sonner";
 
 import Navbar from "@/components/navbar";
 import Providers from "@/providers";
+import Footer from "@/components/footer";
 
-import { cn } from "@/lib/utils";
+import { cn, constructMetadata } from "@/lib/utils";
 
 import "./globals.css";
-import { Toaster } from "sonner";
 
 const inter = Inter({ subsets: ["latin"] });
 
-export const metadata: Metadata = {
-  title: "Marketplace",
-  description: "A marketplace for buying and selling goods.",
-};
+export const metadata = constructMetadata();
 
 export default function RootLayout({
   children,
@@ -31,6 +29,7 @@ export default function RootLayout({
             <Navbar />
             <div className="flex-grow flex-1">{children}</div>
           </main>
+          <Footer />
         </Providers>
         <Toaster position="top-center" richColors />
       </body>

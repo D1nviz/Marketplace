@@ -2,8 +2,10 @@ import express from "express";
 import { inferAsyncReturnType } from "@trpc/server";
 import * as trpcExpress from "@trpc/server/adapters/express";
 import bodyParser from "body-parser";
+import { PayloadRequest } from "payload/types";
 import { IncomingMessage } from "http";
 import nextBuild from "next/dist/build";
+import { parse } from "url";
 
 import { getPayloadClient } from "./get-payload";
 import { nextApp, nextHandler } from "./next-utils";
@@ -31,6 +33,7 @@ const start = async () => {
   });
 
   app.post("/api/webhooks/stripe", webhookMiddleware, stripeWebhookHandler);
+
   const payload = await getPayloadClient({
     initOptions: {
       express: app,
@@ -39,6 +42,23 @@ const start = async () => {
       },
     },
   });
+
+  const cartRouter = express.Router();
+  cartRouter.use(payload.authenticate);
+
+  cartRouter.get("/", (req, res) => {
+    const request = req as PayloadRequest;
+
+    if (!request.user) return res.redirect("/sign-in?origin=/cart");
+
+    const parsedUrl = parse(req.url, true);
+
+    return nextApp.render(req, res, "/cart", parsedUrl.query);
+
+  
+  });
+
+  app.use("/cart", cartRouter);
 
   if (process.env.NEXT_BUILD === "true") {
     app.listen(PORT, async () => {

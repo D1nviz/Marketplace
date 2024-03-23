@@ -7,6 +7,7 @@ import Cart from "@/components/cart";
 import { buttonVariants } from "@/components/ui/button";
 import { Icons } from "@/components/icons";
 import UserAccountNav from "@/components/user-account-nav";
+import MobileNav from "@/components/mobile-nav";
 
 import { getSerVerSideUser } from "@/lib/get-server-side-user";
 
@@ -20,7 +21,7 @@ const Navbar = async () => {
         <MaxWidthWrapper>
           <div className="border-b border-gray-200">
             <div className="flex h-16 items-center">
-              {/* TODO: Mobile nav */}
+              <MobileNav />
               <div className="ml-4 flex-lg:ml-0">
                 <Link href="/">
                   <Icons.logo className="h-10 w-10" />
@@ -42,7 +43,7 @@ const Navbar = async () => {
                   )}
 
                   {user ? (
-                    <UserAccountNav user={user}/>
+                    <UserAccountNav user={user} />
                   ) : (
                     <Link
                       href="/sign-up"
