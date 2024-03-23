@@ -3,8 +3,8 @@ import { slateEditor } from "@payloadcms/richtext-slate";
 import path from "path";
 import dotenv from "dotenv";
 import { webpackBundler } from "@payloadcms/bundler-webpack";
-
 import { buildConfig } from "payload/config";
+
 import { Users } from "./collections/Users";
 import { Products } from "./collections/Products/Products";
 import { Media } from "./collections/Media";

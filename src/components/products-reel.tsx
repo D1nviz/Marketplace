@@ -57,9 +57,7 @@ const ProductReel = (props: ProductReelProps) => {
             className="hidden text-sm font-medium text-orange-600 hover:text-orange-500 md:block"
           >
             Shop the collection
-            <span aria-hidden="true" className="">
-              &rarr;
-            </span>
+            <span aria-hidden="true">&rarr;</span>
           </Link>
         ) : null}
       </div>
@@ -67,7 +65,7 @@ const ProductReel = (props: ProductReelProps) => {
         <div className="mt-6 flex items-center w-full">
           <div className="w-full grid grid-cols-2 gap-x-4 gap-y-10 sm:gap-x-6 md:grid-cols-4 md:gap-y-10 lg:gap-x-8">
             {map.map((product, index) => (
-              <ProductListing product={product} index={index} />
+              <ProductListing key={index} product={product} index={index} />
             ))}
           </div>
         </div>

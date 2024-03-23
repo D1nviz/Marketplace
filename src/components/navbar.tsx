@@ -6,8 +6,9 @@ import NavItems from "@/components/nav-items";
 import Cart from "@/components/cart";
 import { buttonVariants } from "@/components/ui/button";
 import { Icons } from "@/components/icons";
+import UserAccountNav from "@/components/user-account-nav";
+
 import { getSerVerSideUser } from "@/lib/get-server-side-user";
-import UserAccountNav from "./user-account-nav";
 
 const Navbar = async () => {
   const nextCookies = cookies();

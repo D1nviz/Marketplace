@@ -6,6 +6,7 @@ import SwiperType from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination } from "swiper/modules";
 import { ChevronLeft, ChevronRight } from "lucide-react";
+
 import { cn } from "@/lib/utils";
 
 import "swiper/css";
