@@ -48,7 +48,7 @@ const SignInPage = () => {
       router.refresh();
 
       if (origin) {
-        router.push(`/${origin}`);
+        router.push(`${process.env.NEXT_PUBLIC_SERVER_URL}/${origin}`);
         return;
       }
 
