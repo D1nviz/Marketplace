@@ -26,7 +26,6 @@ export default function Home() {
             <Button variant="outline">Our quality promise &rarr;</Button>
           </div>
         </div>
-        {/* TODO: List products */}
         <ProductReel query={{sort: "desc", limit: 4} } title="Brand new" href="#" />
       </MaxWidthWrapper>
       <section className="border-t border-gray-200 bg-gray-50 ">
