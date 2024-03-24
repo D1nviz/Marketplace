@@ -82,7 +82,7 @@ export const stripeWebhookHandler = async (
 
     try {
       const data = await resend.emails.send({
-        from: "DigitalHippo onboarding@resend.dev",
+        from: "<onboarding@resend.dev>",
         to: [user.email],
         subject: "Thanks for your order! This is your receipt.",
         html: ReceiptEmailHtml({

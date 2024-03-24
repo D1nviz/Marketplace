@@ -273,7 +273,7 @@ const productDescription = {
 
 const productLink = {
   fontSize: "12px",
-  color: "rgb(0,112,201)",
+  color: "rgb(240, 124, 30)",
   textDecoration: "none",
 };
 
