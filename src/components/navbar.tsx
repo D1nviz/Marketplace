@@ -21,7 +21,7 @@ const Navbar = async () => {
         <MaxWidthWrapper>
           <div className="border-b border-gray-200">
             <div className="flex h-16 items-center">
-              <MobileNav />
+              <MobileNav user={user} />
               <div className="ml-4 flex-lg:ml-0">
                 <Link href="/">
                   <Icons.logo className="h-10 w-10" />
@@ -32,18 +32,25 @@ const Navbar = async () => {
               </div>
               <div className="ml-auto flex items-center">
                 <div className="hidden lg:flex lg:flex-1 lg:items-center lg:justify-end lg:space-x-6">
-                  {user ? null : (
-                    <Link href="/sign-in" className={buttonVariants({})}>
-                      Sign in
-                    </Link>
+                  {!user && (
+                    <>
+                      <Link href="/sign-in" className={buttonVariants({})}>
+                        Sign in
+                      </Link>
+                      <span
+                        className="h-6 w-px bg-gray-200"
+                        aria-hidden="true"
+                      />
+                    </>
                   )}
-
-                  {user ? null : (
-                    <span className="h-6 w-px bg-gray-200" aria-hidden="true" />
-                  )}
-
                   {user ? (
-                    <UserAccountNav user={user} />
+                    <>
+                      <UserAccountNav user={user} />
+                      <span
+                        className="h-6 w-px bg-gray-200"
+                        aria-hidden="true"
+                      />
+                    </>
                   ) : (
                     <Link
                       href="/sign-up"
@@ -54,12 +61,7 @@ const Navbar = async () => {
                       Create account
                     </Link>
                   )}
-
-                  {user ? (
-                    <span className="h-6 w-px bg-gray-200" aria-hidden="true" />
-                  ) : null}
-
-                  {user ? null : (
+                  {!user && (
                     <div className="flex lg:ml-6">
                       <span
                         className="h-6 w-px bg-gray-200"
@@ -67,9 +69,9 @@ const Navbar = async () => {
                       />
                     </div>
                   )}
-                  <div className="ml-4 flow-root lg:ml-6">
-                    <Cart />
-                  </div>
+                </div>
+                <div className="mx-4 flow-root lg:ml-6">
+                  <Cart />
                 </div>
               </div>
             </div>

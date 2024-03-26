@@ -1,127 +1,119 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { usePathname } from "next/navigation";
+import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { Menu, X } from "lucide-react";
+import { LogOutIcon, MenuIcon } from "lucide-react";
 
+import {
+  Sheet,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/ui/sheet";
+import { Button, buttonVariants } from "@/components/ui/button";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import { Icons } from "@/components/icons";
+
+import { cn } from "@/lib/utils";
+import { User } from "@/payload-types";
+import useAuth from "@/hooks/use-auth";
 import { productCategories } from "@/config";
 
-const MobileNav = () => {
+type MobileNavProps = {
+  user: User | null;
+};
+
+const MobileNav = ({ user }: MobileNavProps) => {
+  const { sigOut } = useAuth();
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
-  const pathname = usePathname();
-
-  useEffect(() => {
-    setIsOpen(false);
-  }, [pathname]);
-
-  const closeOnCurrent = (href: string) => {
-    if (pathname === href) {
-      setIsOpen(false);
-    }
-  };
-
-  useEffect(() => {
-    if (isOpen) document.body.classList.add("overflow-hidden");
-    else document.body.classList.remove("overflow-hidden");
-  }, [isOpen]);
-
-  if (!isOpen)
-    return (
-      <button
-        type="button"
-        onClick={() => setIsOpen(true)}
-        className="lg:hidden relative -m-2 inline-flex items-center justify-center rounded-md p-2 text-gray-400"
-      >
-        <Menu className="h-6 w-6" aria-hidden="true" />
-      </button>
-    );
+  const toggleMenu = () => setIsOpen(() => !isOpen);
 
   return (
-    <div>
-      <div className="relative z-40 lg:hidden">
-        <div className="fixed inset-0 bg-black bg-opacity-25" />
-      </div>
+    <Sheet open={isOpen} onOpenChange={setIsOpen}>
+      <SheetTrigger
+        onClick={toggleMenu}
+        className="lg:hidden relative z-100 inline-flex items-center justify-center rounded-md p-2 text-gray-400"
+      >
+        <MenuIcon className="h-6 w-6" aria-hidden="true" />
+      </SheetTrigger>
 
-      <div className="fixed overflow-y-scroll overscroll-y-none inset-0 z-40 flex">
-        <div className="w-4/5">
-          <div className="relative flex w-full max-w-sm flex-col overflow-y-auto bg-white pb-12 shadow-xl">
-            <div className="flex px-4 pb-2 pt-5">
-              <button
-                type="button"
-                onClick={() => setIsOpen(false)}
-                className="relative -m-2 inline-flex items-center justify-center rounded-md p-2 text-gray-400"
-              >
-                <X className="h-6 w-6" aria-hidden="true" />
-              </button>
-            </div>
-
-            <div className="mt-2">
-              <ul>
-                {productCategories.map((category) => (
-                  <li
-                    key={category.label}
-                    className="space-y-10 px-4 pb-8 pt-10"
-                  >
-                    <div className="border-b border-gray-200">
-                      <div className="-mb-px flex">
-                        <p className="border-transparent text-gray-900 flex-1 whitespace-nowrap border-b-2 py-4 text-base font-medium">
-                          {category.label}
-                        </p>
+      <SheetContent className="flex gap-0 w-full flex-col pr-0 sm:max-w-lg">
+        <SheetHeader className="space-y-2.5 pr-6 pb-3 border-b border-gray-200 bg-white ">
+          <SheetTitle className="flex items-center justify-center gap-3">
+            <Icons.logo className="h-10 w-10" /> Marketplace
+          </SheetTitle>
+        </SheetHeader>
+        <ScrollArea className="w-full bg-white pr-4 overflow-y-hidden">
+          <ul>
+            {productCategories.map((category) => (
+              <li key={category.label} className="px-4 pb-8 mb-3 ">
+                <div className="-mb-px flex">
+                  <p className=" text-gray-900 flex-1 whitespace-nowrap  py-4 text-base font-medium">
+                    {category.label}
+                  </p>
+                </div>
+                <div className="grid grid-cols-2 gap-y-10 gap-x-4">
+                  {category.featured.map((item) => (
+                    <Link
+                      onClick={toggleMenu}
+                      href={item.href}
+                      key={item.name}
+                      className="group relative text-sm"
+                    >
+                      <div className="relative aspect-square overflow-hidden rounded-lg bg-gray-100 group-hover:opacity-75">
+                        <Image
+                          fill
+                          src={item.imageSrc}
+                          alt="product category image"
+                          className="object-cover object-center"
+                        />
                       </div>
-                    </div>
+                      <span className="mt-2 pl-2 block font-medium text-gray-900">
+                        {item.name}
+                      </span>
+                    </Link>
+                  ))}
+                </div>
+              </li>
+            ))}
+          </ul>
 
-                    <div className="grid grid-cols-2 gap-y-10 gap-x-4">
-                      {category.featured.map((item) => (
-                        <div key={item.name} className="group relative text-sm">
-                          <div className="relative aspect-square overflow-hidden rounded-lg bg-gray-100 group-hover:opacity-75">
-                            <Image
-                              fill
-                              src={item.imageSrc}
-                              alt="product category image"
-                              className="object-cover object-center"
-                            />
-                          </div>
-                          <Link
-                            href={item.href}
-                            className="mt-6 block font-medium text-gray-900"
-                          >
-                            {item.name}
-                          </Link>
-                        </div>
-                      ))}
-                    </div>
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            <div className="space-y-6 border-t border-gray-200 px-4 py-6">
-              <div className="flow-root">
+          <div className="flex gap-4 justify-center items-center  border-t border-gray-200 px-4 py-6">
+            {user ? (
+              <Button
+                className="w-full gap-2"
+                variant="destructive"
+                onClick={sigOut}
+              >
+                <LogOutIcon className="w-4 h-4" />
+                Logout
+              </Button>
+            ) : (
+              <>
                 <Link
-                  onClick={() => closeOnCurrent("/sign-in")}
                   href="/sign-in"
-                  className="-m-2 block p-2 font-medium text-gray-900"
+                  onClick={toggleMenu}
+                  className={cn(buttonVariants())}
                 >
                   Sign in
                 </Link>
-              </div>
-              <div className="flow-root">
+                <span className="h-6 w-px bg-gray-200" aria-hidden="true" />
                 <Link
-                  onClick={() => closeOnCurrent("/sign-up")}
                   href="/sign-up"
-                  className="-m-2 block p-2 font-medium text-gray-900"
+                  onClick={toggleMenu}
+                  className={cn(buttonVariants({ variant: "outline" }))}
                 >
                   Sign up
                 </Link>
-              </div>
-            </div>
+              </>
+            )}
           </div>
-        </div>
-      </div>
-    </div>
+        </ScrollArea>
+      </SheetContent>
+    </Sheet>
   );
 };
 

@@ -26,9 +26,9 @@ export const productCategories = [
     label: "UI Kits",
     value: "ui-kits" as const,
     featured: [
-      { name: "Editor picks", href: "#", imageSrc: "/nav/ui-kits/mixed.jpg" },
-      { name: "New Arrivals", href: "#", imageSrc: "/nav/ui-kits/blue.jpg" },
-      { name: "Bestsellers", href: "#", imageSrc: "/nav/ui-kits/purple.jpg" },
+      { name: "Editor picks", href: "/products", imageSrc: "/nav/ui-kits/mixed.jpg" },
+      { name: "New Arrivals", href: "/products", imageSrc: "/nav/ui-kits/blue.jpg" },
+      { name: "Bestsellers", href: "/products", imageSrc: "/nav/ui-kits/purple.jpg" },
     ],
   },
   {

@@ -33,12 +33,12 @@ const Cart = () => {
   const fee = 1;
   return (
     <Sheet>
-      <SheetTrigger className="group -m-2 flex items-center p-2">
+      <SheetTrigger className="bg-orange-500 flex items-center py-2 px-4 -m-2 rounded-full  hover:bg-orange-500/90">
         <ShoppingCart
           aria-hidden="true"
-          className="h-6 w-6 flex-shrink-0 text-gray-400 group-hover:text-gray-500"
+          className="h-6 w-6 flex-shrink-0 text-white"
         />
-        <span className="ml-2 text-sm font-medium text-gray-700 group-hover:text-gray-800">
+        <span className="ml-2  text-sm font-medium text-white ">
           {itemCount}
         </span>
       </SheetTrigger>
@@ -47,13 +47,13 @@ const Cart = () => {
           <SheetTitle> Cart ({itemCount})</SheetTitle>
         </SheetHeader>
         {itemCount > 0 ? (
-          <>
+          <ScrollArea>
             <div className="flex w-full flex-col pr-6">
-              <ScrollArea>
+              <>
                 {items.map(({ product }) => (
                   <CartItem key={product.id} product={product} />
                 ))}
-              </ScrollArea>
+              </>
             </div>
             <div className="space-y-1.5 pr-6">
               <Separator />
@@ -84,7 +84,7 @@ const Cart = () => {
                 </SheetTrigger>
               </SheetFooter>
             </div>
-          </>
+          </ScrollArea>
         ) : (
           <div className="flex h-full flex-col items-center justify-center space-y-1">
             <div
